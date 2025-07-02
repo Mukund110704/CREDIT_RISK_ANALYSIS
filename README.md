@@ -44,7 +44,7 @@ This project answers critical credit risk questions using SQL queries across the
 - **Which education or employment types are more prone to default?**
 - ⚠**Risk profiling based on behavior across all loans and credit cards**
 
-##Techniques Used
+## Techniques Used
 
 - Complex **JOINs** across 4–5 tables  
 - **Aggregations** like `AVG`, `MAX`, `COUNT`, `SUM`  
