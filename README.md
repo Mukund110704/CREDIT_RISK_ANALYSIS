@@ -62,6 +62,5 @@ This project answers critical credit risk questions using SQL queries across the
 - **GitHub**: Version control and documentation.
 
 
-This project is built using the public Kaggle dataset from [Home Credit Default Risk](https://www.kaggle.com/competitions/home-credit-default-risk/data).
 
 
