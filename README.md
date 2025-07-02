@@ -1,59 +1,57 @@
-# 📌 Credit Risk Analysis using SQL
+# Credit Risk Analysis 🏦
 
-![Home Credit Schema](https://storage.googleapis.com/kaggle-media/competitions/home-credit/home_credit.png)
+## Overview
 
-## 🧭 Overview
+This project aims to perform in-depth **credit risk analysis** using structured banking and loan-related datasets. The goal is to extract actionable insights about customer creditworthiness, default tendencies, loan behavior, and other financial indicators by performing SQL-based data exploration.
 
-This project aims to analyze customer credit risk using the [Home Credit Default Risk Dataset](https://www.kaggle.com/competitions/home-credit-default-risk/data) from Kaggle. It includes 8 interlinked tables containing information about customer loan applications, their credit history from other institutions, past payment behavior, and credit card usage.  
-By leveraging **SQL-based relational analysis**, this project extracts meaningful insights to identify high-risk applicants and patterns in default behavior.
+The project uses relational data from multiple tables, such as customer application data, previous loan applications, bureau credit history, installment payments, and credit card balances. These are joined and analyzed to build a comprehensive picture of credit risk factors and borrower behavior.
 
-## 🎯 Objectives
+![Schema Diagram](https://storage.googleapis.com/kaggle-media/competitions/home-credit/home_credit.png)
 
-- Understand patterns in income, credit, and loan status for defaulters vs. non-defaulters  
-- Identify the impact of previous loan refusals, late payments, and credit utilization on default probability  
-- Combine data from multiple sources (application, credit bureau, installments, credit card, etc.) to build a consolidated risk profile for each customer  
-- Pinpoint segments of customers with high default risk based on behavioral patterns
+## Objectives
 
-## 📊 Key Highlights
+- 📊 **Compare defaulters vs. non-defaulters** on income, loan amounts, and financial habits.
+- 🧾 **Analyze past loan application history** and refusal patterns.
+- 🕵️ **Identify behavioral red flags** like payment delays, high credit utilization, or excessive applications.
+- 🏷️ **Correlate personal attributes** (e.g., education level) with default rates.
+- 📉 **Understand the burden of outstanding bureau loans** and missed payments.
+- 📌 **Rank and segment customers** based on risk factors for potential intervention or policy optimization.
 
-- **Default vs. Non-default Analysis**: Compared average income and loan amounts of defaulting vs. repaying customers  
-- **Loan Type Risk**: Identified which types of loans (cash, revolving, etc.) are associated with higher default rates  
-- **Previous Application Behavior**: Tracked how many applications were refused, accepted, or unused per customer  
-- **Installment Payment Delays**: Measured average payment delays and their link to default  
-- **Credit Bureau Records**: Counted number of external loans per customer and flagged those with overdue or active delinquent loans  
-- **Credit Card Utilization**: Calculated utilization ratio and identified high-balance or over-leveraged customers  
-- **Risk Profiling**: Built a comprehensive summary table per customer capturing refusals, delays, credit card usage, and previous loans  
-- **Segmentation**: Filtered customers with risky combinations — e.g., multiple refusals, high delays, and high utilization  
-- **Behavioral Impact**: Analyzed how late payments correlate with default outcomes  
-- **Top Outliers**: Highlighted customers with the biggest differences between loan requested vs. loan granted
+## Key Highlights
 
-## 🗂️ Dataset Source
+- Used **15 comprehensive SQL queries** to answer key business questions about credit risk and customer profiling.
+- Built a **customer-level summary** with KPIs like:
+  - Number of refused applications
+  - Average payment delay
+  - Credit card utilization
+- Identified high-risk customers based on **multiple risk thresholds** (e.g., >2 refusals, avg. delay >30 days, utilization >70%).
+- Ranked customers by **gaps between requested vs. granted credit**, helping highlight mismatches in credit assessments.
+- Mapped relationships between **default risk and personal indicators**, such as education level and payment discipline.
 
-- 📌 [Kaggle: Home Credit Default Risk Dataset](https://www.kaggle.com/competitions/home-credit-default-risk/data)
+## Tech Stack
 
-## 🧱 Data Schema & Table Relationships
+- **SQL**: Core tool for querying, aggregating, and joining complex relational data.
+- **MySQL Workbench** / **MySQL Server**: Used to manage and execute queries efficiently.
+- **Kaggle Dataset**: Imported as CSVs and loaded into MySQL for querying.
+- **GitHub**: Version control and documentation.
 
-The dataset consists of **8 main tables**:
+## Dataset Source
 
-| Table                    | Description                                                                 | Join Key(s)                     |
-|-------------------------|-----------------------------------------------------------------------------|---------------------------------|
-| `application_train` / `application_test` | Main loan application data with demographics, income, and loan terms     | `SK_ID_CURR`                    |
-| `bureau`                | Credit history from other banks/financial institutions                      | `SK_ID_CURR`                    |
-| `bureau_balance`        | Monthly repayment status of external loans                                  | `SK_ID_BUREAU` (links to `bureau`) |
-| `previous_application`  | All past applications to Home Credit                                        | `SK_ID_CURR`, `SK_ID_PREV`      |
-| `installments_payments` | Payment records on previous Home Credit loans                               | `SK_ID_PREV`                    |
-| `credit_card_balance`   | Monthly credit card usage                                                   | `SK_ID_CURR`                    |
-| `POS_CASH_balance`      | Point-of-sale loan balance and status over time                             | `SK_ID_CURR`                    |
-| `application_test`      | Same as `application_train` but used for prediction (no TARGET column)      | `SK_ID_CURR`                    |
+- 📂 [Home Credit Default Risk Dataset on Kaggle](https://www.kaggle.com/competitions/home-credit-default-risk/data)
 
-**Example Relationships:**
-- Each `SK_ID_CURR` (customer) may have multiple entries in `bureau`, `previous_application`, and `credit_card_balance`
-- Each `SK_ID_PREV` (loan) links to its payment history in `installments_payments`
-- `bureau_balance` holds monthly updates on loans from the `bureau` table
+## Schema Explanation (Based on Diagram Above)
 
-## 🛠️ Tech Stack
+- **application_train**: Main customer application table containing income, credit, education, family, and target (default status).
+- **previous_application**: Details of previous loan applications, including status (approved/refused) and requested amounts.
+- **bureau**: External credit history from credit bureaus, linked by `SK_ID_CURR`.
+- **bureau_balance**: Monthly status updates for each bureau record.
+- **installments_payments**: Records of scheduled vs. actual installment payments.
+- **credit_card_balance**: Ongoing balance and limit data for customer credit cards.
 
-- **Database**: MySQL  
-- **Query Language**: SQL (JOINs, aggregates, CASE statements, subqueries)  
-- **Source Control**: GitHub  
-- **Dataset**: CSV files from Kaggle
+The relationships between tables are:
+- `SK_ID_CURR` links the main customer to bureau, previous applications, and credit cards.
+- `SK_ID_PREV` links previous applications to installment payments.
+- `SK_ID_BUREAU` links bureau records to their monthly balances.
+
+---
+
